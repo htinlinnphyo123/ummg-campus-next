@@ -17,9 +17,6 @@ export default function Banner() {
             <p className="text-xl md:text-2xl font-light animate-fade-in-delay">
               ကျောင်းမတက်နဲ့ကျောင်းထွက်
             </p>
-            <button className="mt-4 px-8 py-3 bg-university-purple hover:bg-purple-700 text-white rounded-full transition-colors duration-300 animate-fade-in-delay-2">
-              Explore More
-            </button>
           </div>
         </div>
       </div>

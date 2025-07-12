@@ -1,4 +1,3 @@
-import { useTranslation } from "next-i18next";
 import { useState } from "react";
 import MobileNav from "./MobileNav";
 import ThemeToggle from "./common/ThemeToggle";
@@ -7,7 +6,6 @@ import useHeaderToggler from "../hooks/header-toggler";
 import UniLogo from "../public/images/ummg/uni_logo.png"
 
 export default function Header() {
-  const { t } = useTranslation("common");
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
@@ -36,13 +34,13 @@ export default function Header() {
                 alt="Lucky Click Logo"
                 className="h-12 w-12 mr-2 rounded-sm"
               />
-              {t("app-name")}
+              UMMG
             </span>
           </div>
 
           <div className={`hidden md:flex items-center gap-4 py-2 px-4 transition-all duration-100
           ${!isHeaderVisible
-            ? 'bg-black text-white dark:bg-white dark:text-black bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-full'
+            ? 'bg-white text-black dark:bg-black dark:text-white bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-full'
             : ''
           }`}>
             <NavLinks className="px-3 py-1" />

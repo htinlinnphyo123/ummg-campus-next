@@ -1,12 +1,15 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetStaticProps } from "next";
 import Header from "../components/Header";
 import About from "../components/home/About";
 import Banner from "../components/home/Banner"
 import Nostalgia from "../components/home/Nostalgia"
 import Timeline from "../components/home/Timeline"
 import Vision from "../components/home/Vision"
+import IUCCoreCommittee from "../components/home/core_committee"
+import AcademicSection from "../components/home/academic"
 import { useEffect, useState } from "react";
+import Curriculum from "../components/home/curriculum";
+import Divider from '../components/common/CustomDivider';
+      
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,16 +33,19 @@ export default function Home() {
     <div className="bg-gray-100 dark:bg-gray-800 min-h-screen text-black dark:text-white">
       <Header />
       <Banner />
-      <About title="About UMMG" />
+      <About />
+      <Divider />
       <Vision />
+      <Divider />
       <Timeline />
+      <Divider />
       <Nostalgia />
+      <Divider />
+      <IUCCoreCommittee />
+      <Divider />
+      <AcademicSection />
+      <Divider />
+      <Curriculum />
     </div>
   );
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale || "en", ["common"])),
-  },
-});

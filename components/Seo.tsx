@@ -9,10 +9,10 @@ interface SeoProps {
 }
 
 export const Seo = ({
-  title = "Lucky Click",
-  description = "Stay tuned for the latest updates and features of Lucky Click, your go-to platform for exciting opportunities.",
-  image = "/images/lucky_click.png",
-  url = "https://lucky-click.com",
+  title = "University of Medicine Magway",
+  description = "Welcome to University of Medicine Magway",
+  image = "/images/ummg/uni_logo.png",
+  url = "https://ummgcampus.org",
   favicon = "/favicon.ico",
 }: SeoProps) => {
   return (

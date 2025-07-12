@@ -1,12 +1,11 @@
 import Nostalgic from "../../public/images/ummg/nostalgic.jpg"
+import Title from "./title";
 export default function LwnYaTaeNayYarLay() {
   return (
     <div id="iuc" className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-2 lg:px-10">
       <div className="md:text-left text-center md:w-1/2">
-        <h3 className="text-lg lg:text-4xl font-bold text-university-purple mb-6">
-          INTERIM UNIVERSITY COUNCIL
-        </h3>
-        <p className="font-bold">
+        <Title name="Interm University Council" />
+        <p>
           On February 1, 2021, the coup d‘ etat started in Myanmar. The people
           protested the coup through a wide range of non-violent methods most
           notably Civil Disobedience Movements initiated by doctors, nurses and

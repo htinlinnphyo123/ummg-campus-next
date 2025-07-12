@@ -1,9 +1,9 @@
 export default function Vision() {
   return (
-    <section className="py-20 bg-light-purple">
+    <section className="bg-light-purple">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
         <div className="grid md:grid-cols-2 gap-8">
-          <div className="p-8 bg-violet-400/50 cursor-pointer hover:shadow-2xl rounded-lg overflow-hidden shadow-sm font-bold transition-shadow">
+          <div className="p-8 bg-white text-gray-900 cursor-pointer hover:shadow-2xl rounded-lg overflow-hidden shadow-sm font-bold transition-shadow">
             <svg
               stroke="currentColor"
               fill="currentColor"
@@ -26,7 +26,7 @@ export default function Vision() {
             </div>
           </div>
 
-          <div className="p-8 bg-violet-400/50 cursor-pointer hover:shadow-2xl rounded-lg overflow-hidden shadow-sm font-bold transition-shadow">
+          <div className="p-8 bg-white text-gray-900 cursor-pointer hover:shadow-2xl rounded-lg overflow-hidden shadow-sm font-bold transition-shadow">
             <svg
               stroke="currentColor"
               fill="currentColor"

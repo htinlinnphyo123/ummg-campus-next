@@ -1,9 +1,7 @@
-import { useTranslation } from "next-i18next";
 import { useEffect, useRef, useState } from "react";
 import { NavLinksProps } from "../../types/MobileNavProps";
 
 export const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
-  const { t } = useTranslation("common");
   const [active, setActive] = useState<string>("home");
 
   const sections = ["home", "iuc", "academic", "news"];
@@ -71,7 +69,7 @@ export const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
           }}
           key={section}
         >
-          {t(section)}
+          {section}
         </button>
       ))}
     </>

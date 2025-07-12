@@ -1,12 +1,9 @@
 import Link from "next/link";
-import { useTranslation } from "next-i18next";
 import { MobileNavProps } from "../types/MobileNavProps";
 import ThemeToggle from "./common/ThemeToggle";
-import { LanguageSwitcher } from "./common/LanguageSwitcher";
 import { NavLinks } from "./common/NavLinks";
 
 export default function MobileNav({ isOpen, closeSidebar }: MobileNavProps) {
-  const { t } = useTranslation("common");
   const style: string = "w-full text-left px-3 py-2 border rounded";
 
   return (
