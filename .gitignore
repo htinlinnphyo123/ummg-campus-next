@@ -42,3 +42,5 @@ Thumbs.db
 
 # Optional: next-i18next cache
 .i18n/
+
+/generated/prisma
