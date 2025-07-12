@@ -30,8 +30,10 @@ export default function Home() {
     <div className="bg-gray-100 dark:bg-gray-800 min-h-screen text-black dark:text-white">
       <Header />
       <Banner />
-      <About />
-      <TImeline />
+      <About title="About UMMG" />
+      <Vision />
+      <Timeline />
+      <Nostalgia />
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function Vision() {
               <h4 className="text-xl font-semibold text-university-purple mb-4">
                 Vision Statement
               </h4>
-              <p className="text-gray-700">
+              <p className="">
                 The University of Medicine, Magway aspires to be an autonomous learner-focused university which provides standard medical education and produces competent medical doctors.
               </p>
             </div>
@@ -43,7 +43,7 @@ export default function Vision() {
               <h4 className="text-xl font-semibold text-university-purple mb-4">
                 Mision Statements
               </h4>
-              <p className="text-gray-700">
+              <p className="">
                 The University of Medicine, Magway is committed to providing a conducive learning environment which can provide fundamental knowledge, skills, attitude and personal development to its students and promote research culture and innovations.
               </p>
             </div>

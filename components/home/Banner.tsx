@@ -1,10 +1,10 @@
-import BannerImage from "@/assets/banner.png"
+import BannerImage from "../../public/images/ummg/banner.png"
 export default function Banner() {
   return (
-    <section className="w-full relative">
+    <section id="home" className="w-full relative">
       <div className="h-screen w-full relative overflow-hidden">
         <img
-          src={BannerImage}
+          src={BannerImage.src}
           alt="UMMG Campus Banner"
           className="w-full h-full object-cover"
         />

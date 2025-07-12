@@ -27,7 +27,6 @@ export default function MobileNav({ isOpen, closeSidebar }: MobileNavProps) {
             className="w-full text-left px-3 py-2"
             onClick={closeSidebar}
           />
-          <LanguageSwitcher className={style} />
 
           <ThemeToggle />
         </div>

@@ -17,7 +17,7 @@ export default function ThemeToggle({ onClick }: { onClick?: () => void }) {
   if (!mounted) return null; // Prevent SSR mismatch
 
   return (
-    <div className="theme-toggle-wrapper" onClick={handleClick}>
+    <div className="theme-toggle-wrapper select-none" onClick={handleClick}>
       <div className={`toggle ${theme}`}>
         <div className="icon sun">☀️</div>
         <div className="icon moon">🌙</div>

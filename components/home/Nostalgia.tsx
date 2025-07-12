@@ -1,7 +1,7 @@
-import Nostalgic from "@/assets/nostalgic.jpg"
+import Nostalgic from "../../public/images/ummg/nostalgic.jpg"
 export default function LwnYaTaeNayYarLay() {
   return (
-    <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-2 lg:px-10">
+    <div id="iuc" className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-2 lg:px-10">
       <div className="md:text-left text-center md:w-1/2">
         <h3 className="text-lg lg:text-4xl font-bold text-university-purple mb-6">
           INTERIM UNIVERSITY COUNCIL
@@ -27,7 +27,7 @@ export default function LwnYaTaeNayYarLay() {
       </div>
       <div className="md:w-1/2">
         <img
-          src={Nostalgic}
+          src={Nostalgic.src}
           alt="Core Committee"
           className="w-full h-auto rounded-lg shadow-lg"
         />

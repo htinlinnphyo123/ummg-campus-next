@@ -6,7 +6,7 @@ export const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
   const { t } = useTranslation("common");
   const [active, setActive] = useState<string>("home");
 
-  const sections = ["home", "tutorial", "our-info", "app-ui"];
+  const sections = ["home", "iuc", "academic", "news"];
   const isScrolling = useRef(false);
   const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -57,7 +57,7 @@ export const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
   }, []);
 
   const getButtonClass = (section: string) => {
-    return `${className} ${active === section ? "active" : ""}`;
+    return `${className} ${active === section ? "active uppercase" : "uppercase"}`;
   };
 
   return (
