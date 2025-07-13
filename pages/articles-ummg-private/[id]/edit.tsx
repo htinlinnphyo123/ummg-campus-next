@@ -2,11 +2,12 @@ import { GetServerSideProps } from 'next';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { Editor } from 'primereact/editor';
 
 export default function EditArticle({ article, notFound }: any) {
   const [name, setName] = useState(article?.name || '');
   const [description, setDescription] = useState(article?.description || '');
-  const [image, setImage] = useState(article?.image || '');
+  const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
@@ -17,16 +18,26 @@ export default function EditArticle({ article, notFound }: any) {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    if (image) {
+      formData.append('image', image);
+    }
+
     try {
       const res = await fetch(`/api/articles/${article.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, description, image }),
+        body: formData,
       });
+      console.log(res);
       if (!res.ok) {
         const data = await res.json();
+        console.log('I am not ok to upload');
         setError(data.error || 'Failed to update article');
       } else {
+        console.log('uploaded successfully')
         router.push(`/articles-ummg-private/${article.id}`);
       }
     } catch (err) {
@@ -46,18 +57,18 @@ export default function EditArticle({ article, notFound }: any) {
         </div>
         <div>
           <label className="block font-medium">Description</label>
-          <textarea value={description} onChange={e => setDescription(e.target.value)} required className="w-full border px-3 py-2 rounded" />
+          <Editor value={description} onTextChange={(e) => setDescription(e.htmlValue || '')} style={{ height: '320px' }} />
         </div>
         <div>
-          <label className="block font-medium">Image URL</label>
-          <input value={image} onChange={e => setImage(e.target.value)} required className="w-full border px-3 py-2 rounded" />
+          <label className="block font-medium">Image</label>
+          <input type="file" onChange={e => setImage(e.target.files ? e.target.files[0] : null)} className="w-full border px-3 py-2 rounded" />
         </div>
         {error && <div className="text-red-600">{error}</div>}
         <button type="submit" disabled={loading} className="bg-blue-500 text-white px-4 py-2 rounded">
           {loading ? 'Updating...' : 'Update Article'}
         </button>
       </form>
-      <Link href={`/articles/${article.id}`} className="text-gray-600 hover:underline mt-4 inline-block">Back to article</Link>
+      <Link href={`/articles-ummg-private/${article.id}`} className="text-gray-600 hover:underline mt-4 inline-block">Back to article</Link>
     </div>
   );
 }
@@ -70,4 +81,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   const article = await res.json();
   return { props: { article } };
-}; 
+};

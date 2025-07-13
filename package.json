@@ -19,6 +19,7 @@
     "next-i18next": "latest",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.5",
+    "quill": "^2.0.3",
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss-animate": "^1.0.7"

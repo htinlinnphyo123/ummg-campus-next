@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import {Editor} from 'primereact/editor'
 
 export default function NewArticle() {
   const [name, setName] = useState('');
@@ -47,7 +48,7 @@ export default function NewArticle() {
         </div>
         <div>
           <label className="block font-medium">Description</label>
-          <textarea value={description} onChange={e => setDescription(e.target.value)} required className="w-full border px-3 py-2 rounded" />
+          <Editor value={description} onTextChange={(e) => setDescription(e.htmlValue || '')} style={{ height: '320px' }} />
         </div>
         <div>
           <label className="block font-medium">Image</label>
@@ -60,4 +61,4 @@ export default function NewArticle() {
       </form>
     </div>
   );
-} 
+}

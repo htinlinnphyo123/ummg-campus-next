@@ -7,7 +7,7 @@ export default function ArticleView({ article, notFound }: any) {
     <div className="max-w-xl mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">{article.name}</h1>
       <img src={article.image} alt={article.name} className="w-full h-64 object-cover rounded mb-4" />
-      <p className="mb-4">{article.description}</p>
+      <div className="mb-4" dangerouslySetInnerHTML={{ __html: article.description }} />
       <div className="flex gap-4">
         <Link href={`/articles-ummg-private/${article.id}/edit`} className="text-blue-600 hover:underline">Edit</Link>
         <Link href="/articles-ummg-private" className="text-gray-600 hover:underline">Back to list</Link>

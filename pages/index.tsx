@@ -9,6 +9,8 @@ import AcademicSection from "../components/home/academic"
 import { useEffect, useState } from "react";
 import Curriculum from "../components/home/curriculum";
 import Divider from '../components/common/CustomDivider';
+import Article from '../components/home/Articles'
+import Link from "next/link";
       
 
 export default function Home() {
@@ -16,7 +18,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 10);
 
     return () => clearTimeout(timer);
   }, []);
@@ -46,6 +48,16 @@ export default function Home() {
       <AcademicSection />
       <Divider />
       <Curriculum />
+      <Divider />
+      <Article />
+      <div className="flex justify-center mt-8 mb-12">
+        <Link
+          href="/news"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+        >
+          See All Articles
+        </Link>
+      </div>
     </div>
   );
 }

@@ -10,7 +10,12 @@ export const config = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
     try {
-      const articles = await prisma.article.findMany({ orderBy: { createdAt: 'desc' } });
+      const articles = await prisma.article.findMany(
+        {
+          orderBy: { createdAt: 'desc' },
+          ...(req.query.count ? { take: Number(req.query.count) } : {}),
+        }
+      );
       const articlesWithFullImageUrl = articles.map(article => ({
         ...article,
         image: `${process.env.APP_URL}/${article.image}`
@@ -25,11 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const form = formidable({
       uploadDir: path.join(process.cwd(), 'public/uploads'),
       keepExtensions: true,
-      maxFileSize: 5 * 1024 * 1024, // 5MB
+      maxFileSize: 5 * 1024 * 1024,
     });
 
     try {
-      console.log("hello")
       const [fields, files] = await new Promise<[formidable.Fields, formidable.Files]>((resolve, reject) => {
         form.parse(req, (err, fields, files) => {
           if (err) reject(err);
@@ -40,14 +44,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { name, description } = fields;
       // Handle files.image being an array or single file
       const uploadedImage = Array.isArray(files.image) ? files.image[0] : files.image;
-      console.log('hello 2');
       if (!name || !description || !uploadedImage) {
         return res.status(400).json({ error: 'Missing required fields' });
       }
 
-      console.log('hello 3')
-
-      console.log('uploadedImage:', uploadedImage);
       // Get the relative path of the uploaded file
       const filePath = uploadedImage.filepath || uploadedImage.path;
       if (!filePath) {
@@ -57,7 +57,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         path.join(process.cwd(), 'public/uploads'),
         filePath
       );
-      console.log('hello 4')
       const article = await prisma.article.create({
         data: {
           name: name.toString(),
@@ -65,7 +64,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           image: "uploads/" + path.basename(relativePath), // Store the relative path in the database
         },
       });
-      console.log('hello 5')
       return res.status(201).json(article);
     } catch (error) {
       console.error('Error creating article:', error);
