@@ -23,6 +23,7 @@ export default function NewArticle() {
         method: 'POST',
         body: formData,
       });
+      console.log(res);
       if (!res.ok) {
         const data = await res.json();
         setError(data.error || 'Failed to create article');

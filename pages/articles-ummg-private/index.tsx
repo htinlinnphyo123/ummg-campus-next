@@ -47,6 +47,7 @@ export default function ArticlesList() {
             <div>
               <Link href={`/articles-ummg-private/${article.id}`} className="text-lg font-semibold hover:underline">{article.name}</Link>
               <div className="text-sm text-gray-500">{article.description.slice(0, 60)}...</div>
+              <img src={article.image} alt={article.name} className="w-40 h-20 object-cover mt-2" />
             </div>
             <div className="flex gap-2">
               <Link href={`/articles-ummg-private/${article.id}/edit`} className="text-blue-600 hover:underline">Edit</Link>
