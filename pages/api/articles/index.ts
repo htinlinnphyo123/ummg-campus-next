@@ -1,8 +1,21 @@
+// pages/api/articles/index.ts (assuming this is your file)
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../../lib/prisma'; // Ensure this points to your MongoDB-configured PrismaClient
 import formidable from 'formidable';
-import path from 'path';
-import fs from 'fs'; // Import fs for directory creation
+// import path from 'path'; // No longer needed for local paths
+import fs from 'fs/promises'; // Use fs/promises to read file for Cloudinary upload
+
+// Cloudinary setup
+import { v2 as cloudinary } from 'cloudinary';
+
+// Configure Cloudinary with your environment variables
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true, // Use HTTPS
+});
 
 // Define the shape of your form fields
 interface ArticleFields extends formidable.Fields {
@@ -29,20 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ...(req.query.count ? { take: Number(req.query.count) } : {}),
       });
 
-      // Ensure APP_URL is defined for image URLs
-      if (!process.env.APP_URL) {
-        console.warn("APP_URL environment variable is not set. Image URLs may be incomplete.");
-        // Depending on your deployment, you might want to return an error or default
-        // For development, it might default to http://localhost:3000
-      }
-
-      const articlesWithFullImageUrl = articles.map(article => ({
-        ...article,
-        // The image path stored in DB is "uploads/filename.ext"
-        // We prepend APP_URL to make it a full URL
-        image: `${process.env.APP_URL || ''}/${article.image}`
-      }));
-      return res.status(200).json(articlesWithFullImageUrl);
+      return res.status(200).json(articles); // Return articles directly
     } catch (error) {
       console.error('Error fetching articles:', error); // Log the actual error
       return res.status(500).json({ error: 'Failed to fetch articles' });
@@ -50,19 +50,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'POST') {
-    const uploadDir = path.join(process.cwd(), 'public/uploads');
-
-    // Ensure the upload directory exists
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
     const form = formidable({
-      uploadDir: uploadDir, // Use the variable
-      keepExtensions: true,
       maxFileSize: 5 * 1024 * 1024, // 5 MB
-      // You can also add more options, e.g., filter for image types
-      // filter: ({ mimetype }) => mimetype && mimetype.includes('image'),
     });
 
     try {
@@ -72,46 +61,83 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             console.error('Formidable parse error:', err);
             return reject(err);
           }
-          resolve([fields as ArticleFields, files as ArticleFiles]); // Type assertion
+          resolve([fields as ArticleFields, files as ArticleFiles]);
         });
       });
 
-      // Formidable returns fields as arrays of strings, so access the first element
       const name = fields.name?.[0];
       const description = fields.description?.[0];
-      const uploadedImage = files.image?.[0]; // Access the first file in the array
+      const uploadedImage = files.image?.[0];
 
       if (!name || !description || !uploadedImage) {
-        // Clean up partially uploaded files if fields are missing
-        if (uploadedImage && uploadedImage.filepath && fs.existsSync(uploadedImage.filepath)) {
-          fs.unlinkSync(uploadedImage.filepath);
+        if (uploadedImage && uploadedImage.filepath) {
+          await fs.unlink(uploadedImage.filepath);
         }
         return res.status(400).json({ error: 'Missing required fields (name, description, or image)' });
       }
 
-      const filePath = uploadedImage.filepath;
-      if (!filePath) {
-        // This case should ideally not happen if uploadedImage exists, but for safety
-        return res.status(400).json({ error: 'Uploaded file path is missing' });
-      }
+      let imageUrl: string = '';
 
-      // We need to store just the path relative to the public directory for serving
-      // formidable saves files with a unique name in the uploadDir.
-      // We just need the basename (filename with extension)
-      const fileName = path.basename(filePath);
-      const relativeDbPath = "uploads/" + fileName; // Path to store in DB for serving
+      // Check if the uploaded file is valid
+      if (uploadedImage.filepath && uploadedImage.mimetype) {
+        try {
+          // Read the temporary file into a buffer
+          const imageBuffer = await fs.readFile(uploadedImage.filepath);
+
+          const result = await cloudinary.uploader.upload_stream(
+            { resource_type: 'image', folder: 'articles' }, // Specify folder in Cloudinary
+            async (error, result) => {
+              if (error) {
+                console.error('Cloudinary upload error:', error);
+                // Clean up formidable temp file if upload fails
+                await fs.unlink(uploadedImage.filepath);
+                throw new Error('Failed to upload image to Cloudinary');
+              }
+              if (result) {
+                imageUrl = result.secure_url; // This is the public URL
+                // The Promise will resolve later, so handle it carefully
+              }
+            }
+          ).end(imageBuffer); // End the stream with the image buffer
+
+          // Wait for the stream to finish and result to be available
+          // This requires a bit of refactoring for async/await with upload_stream,
+          // A more direct way is to use `upload` with the file path directly.
+          // Let's use `upload` for simplicity with formidable's temp file.
+
+          // Option 2: Use cloudinary.uploader.upload with the temporary file path
+          const uploadResult = await cloudinary.uploader.upload(uploadedImage.filepath, {
+            folder: 'articles', // Optional: organize uploads into a folder
+            resource_type: 'image', // Ensures it's treated as an image
+          });
+          imageUrl = uploadResult.secure_url;
+
+          // Clean up the temporary file created by formidable AFTER successful upload
+          await fs.unlink(uploadedImage.filepath);
+
+        } catch (uploadError) {
+          console.error('Image upload process error:', uploadError);
+          // Ensure temp file is cleaned up on any error during upload
+          if (uploadedImage.filepath) {
+            await fs.unlink(uploadedImage.filepath);
+          }
+          return res.status(500).json({ error: 'Failed to upload image to Cloudinary.' });
+        }
+      } else {
+        // If uploadedImage is missing filepath or mimetype
+        return res.status(400).json({ error: 'Invalid image file provided.' });
+      }
 
       const article = await prisma.article.create({
         data: {
           name: name,
           description: description,
-          image: relativeDbPath, // Store "uploads/your-filename.ext"
+          image: imageUrl, // Store the Cloudinary URL
         },
       });
       return res.status(201).json(article);
     } catch (error) {
       console.error('Error creating article:', error);
-      // More specific error handling could be added for formidable errors vs. Prisma errors
       let errorMessage = 'Failed to create article';
       if (error instanceof Error) {
         if (error.message.includes('maximum file size exceeded')) {

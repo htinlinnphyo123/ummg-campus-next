@@ -1,8 +1,21 @@
+// pages/api/articles/[id].ts
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../../lib/prisma'; // Ensure this points to your MongoDB-configured PrismaClient
-import formidable, { File } from 'formidable';
-import path from 'path';
-import fs from 'fs/promises'; // Use fs/promises for async operations
+import formidable from 'formidable';
+// No longer need 'path' for local file paths
+import fs from 'fs/promises'; // Still needed to read formidable's temporary file
+
+// Cloudinary setup
+import { v2 as cloudinary } from 'cloudinary';
+
+// Configure Cloudinary with your environment variables
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true, // Use HTTPS
+});
 
 // Define the shape of your form fields
 interface ArticleFields extends formidable.Fields {
@@ -22,47 +35,39 @@ export const config = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query; // `id` will be a string from the URL
+  const { id } = req.query; // `id` will be a string from the URL (MongoDB ObjectId)
   if (typeof id !== 'string') {
     return res.status(400).json({ error: 'Invalid or missing article ID' });
   }
 
-  // Define the upload directory
-  const uploadDir = path.join(process.cwd(), 'public/uploads');
-  // Ensure the upload directory exists
-  try {
-    await fs.mkdir(uploadDir, { recursive: true });
-  } catch (error) {
-    console.error('Failed to create upload directory:', error);
-    return res.status(500).json({ error: 'Server configuration error: Could not ensure upload directory exists.' });
-  }
+  // No longer need to manage a local upload directory here
+  // const uploadDir = path.join(process.cwd(), 'public/uploads');
+  // try {
+  //   await fs.mkdir(uploadDir, { recursive: true });
+  // } catch (error) {
+  //   console.error('Failed to create upload directory:', error);
+  //   return res.status(500).json({ error: 'Server configuration error: Could not ensure upload directory exists.' });
+  // }
 
 
   if (req.method === 'GET') {
     try {
-      // **CHANGE 1: Remove Number() for id**
+      // Find article by its string ID (MongoDB ObjectId)
       const article = await prisma.article.findUnique({ where: { id: id } });
       if (!article) return res.status(404).json({ error: 'Article not found' });
 
-      // Construct full image URL if image exists
-      if (article.image && process.env.APP_URL) {
-        article.image = `${process.env.APP_URL}/${article.image}`;
-      } else if (article.image) {
-        console.warn("APP_URL environment variable is not set. Image URLs may be incomplete for GET request.");
-        // Depending on your deployment, you might want to return a default or just the relative path
-      }
-      
+      // With Cloudinary, the 'image' field in DB will already store the full public URL.
+      // So, no need to prepend APP_URL or do any transformation here.
+      // The `article.image` will directly be the URL from Cloudinary.
       return res.status(200).json(article);
     } catch (error) {
-      console.error('Error fetching article:', error); // Log the actual error
+      console.error('Error fetching article:', error);
       return res.status(500).json({ error: 'Failed to fetch article' });
     }
   }
 
   if (req.method === 'PUT') {
     const form = formidable({
-      uploadDir: uploadDir, // Use the variable
-      keepExtensions: true,
       maxFileSize: 5 * 1024 * 1024, // 5 MB
     });
 
@@ -77,61 +82,74 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
       });
 
-      const name = fields.name?.[0]; // Access the first element of the array
-      const description = fields.description?.[0]; // Access the first element of the array
-      let imagePath: string | undefined; // To store the new image path
+      const name = fields.name?.[0];
+      const description = fields.description?.[0];
+      let newImageUrl: string | undefined;
 
       const dataToUpdate: { name?: string; description?: string; image?: string } = {};
 
       if (name) dataToUpdate.name = name;
       if (description) dataToUpdate.description = description;
 
-      // Handle image upload
+      // Handle image upload for update
       if (files.image) {
-        const uploadedImage = files.image[0]; // Get the first file if multiple
-        const newFileName = `${Date.now()}-${uploadedImage.originalFilename}`;
-        const newImagePath = path.join(uploadDir, newFileName);
+        const uploadedImage = files.image[0];
 
-        // **Improvement: Atomically move the file and delete old one**
-        await fs.rename(uploadedImage.filepath, newImagePath); // Move the temp file to desired location
-        imagePath = 'uploads/' + newFileName; // Relative path for DB
-
-        // If a new image is uploaded, we should clean up the old one
-        // First, fetch the existing article to get the old image path
-        // **CHANGE 2: Fetch article with string ID**
+        // 1. Fetch the existing article to get the old image URL
         const existingArticle = await prisma.article.findUnique({
           where: { id: id },
-          select: { image: true } // Only select the image field
+          select: { image: true }
         });
 
-        if (existingArticle && existingArticle.image) {
-          const oldImageRelativePath = existingArticle.image;
-          const oldImageFullPath = path.join(process.cwd(), 'public', oldImageRelativePath);
+        // 2. Upload the new image to Cloudinary
+        if (uploadedImage.filepath && uploadedImage.mimetype) {
           try {
-            // Check if the old image file exists before trying to delete
-            await fs.access(oldImageFullPath);
-            await fs.unlink(oldImageFullPath);
-            console.log(`Old image deleted: ${oldImageFullPath}`);
-          } catch (deleteError: any) {
-            // If the file doesn't exist, fs.access will throw, which is fine
-            if (deleteError.code === 'ENOENT') {
-              console.warn(`Old image not found at ${oldImageFullPath}, skipping deletion.`);
-            } else {
-              console.error(`Failed to delete old image ${oldImageFullPath}:`, deleteError);
+            const uploadResult = await cloudinary.uploader.upload(uploadedImage.filepath, {
+              folder: 'articles', // Same folder as create
+              resource_type: 'image',
+            });
+            newImageUrl = uploadResult.secure_url;
+
+            // 3. Clean up the temporary file created by formidable
+            await fs.unlink(uploadedImage.filepath);
+
+            // 4. Delete the old image from Cloudinary (if it exists and is a valid Cloudinary URL)
+            if (existingArticle && existingArticle.image) {
+              // Extract public_id from the Cloudinary URL
+              const publicIdMatch = existingArticle.image.match(/\/v\d+\/(articles\/[^/.]+)\./);
+              if (publicIdMatch && publicIdMatch[1]) {
+                const publicId = publicIdMatch[1]; // e.g., 'articles/some_random_id_with_original_name'
+                try {
+                  await cloudinary.uploader.destroy(publicId);
+                  console.log(`Old Cloudinary image deleted: ${existingArticle.image}`);
+                } catch (deleteError) {
+                  console.warn(`Failed to delete old Cloudinary image ${existingArticle.image}:`, deleteError);
+                }
+              } else {
+                console.warn(`Could not extract public_id from old image URL: ${existingArticle.image}`);
+              }
             }
+            dataToUpdate.image = newImageUrl; // Set the new image URL for update
+          } catch (uploadError) {
+            console.error('Image upload/deletion process error during PUT:', uploadError);
+            // Ensure temp file is cleaned up on any error during upload
+            if (uploadedImage.filepath) {
+              await fs.unlink(uploadedImage.filepath);
+            }
+            return res.status(500).json({ error: 'Failed to upload/update image on Cloudinary.' });
           }
+        } else {
+          return res.status(400).json({ error: 'Invalid image file provided for update.' });
         }
-        dataToUpdate.image = imagePath; // Set the new image path for update
       }
 
-      // If no name, description, or new image, maybe return early?
+      // If no name, description, or new image, return early
       if (Object.keys(dataToUpdate).length === 0) {
         return res.status(400).json({ error: 'No data provided for update.' });
       }
 
-      // **CHANGE 3: Update with string ID**
       const updatedArticle = await prisma.article.update({
-        where: { id: id },
+        where: { id: id }, // Update by string ID
         data: dataToUpdate,
       });
 
@@ -150,31 +168,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === 'DELETE') {
     try {
-      // First, find the article to get its image path for deletion
-      // **CHANGE 4: Find article with string ID before delete**
+      // 1. Find the article to get its image URL for deletion from Cloudinary
       const articleToDelete = await prisma.article.findUnique({
         where: { id: id },
         select: { image: true }
       });
 
-      // **CHANGE 5: Delete with string ID**
+      // 2. Delete the article record from MongoDB
       await prisma.article.delete({ where: { id: id } });
 
-      // If an article and its image path exist, attempt to delete the image file
+      // 3. If an image exists, delete it from Cloudinary storage
       if (articleToDelete && articleToDelete.image) {
-        const imageFullPath = path.join(process.cwd(), 'public', articleToDelete.image);
-        try {
-          await fs.access(imageFullPath); // Check if file exists
-          await fs.unlink(imageFullPath); // Delete the file
-          console.log(`Image deleted for article ${id}: ${imageFullPath}`);
-        } catch (fileDeleteError: any) {
-          if (fileDeleteError.code === 'ENOENT') {
-            console.warn(`Image file not found for article ${id} at ${imageFullPath}, skipping deletion.`);
-          } else {
-            console.error(`Error deleting image file for article ${id} at ${imageFullPath}:`, fileDeleteError);
-            // Decide if you want to send a 500 here or just log and continue
-            // For now, we proceed with 204 as the DB record is deleted
+        // Extract public_id from the Cloudinary URL
+        const publicIdMatch = articleToDelete.image.match(/\/v\d+\/(articles\/[^/.]+)\./);
+        if (publicIdMatch && publicIdMatch[1]) {
+          const publicId = publicIdMatch[1];
+          try {
+            await cloudinary.uploader.destroy(publicId);
+            console.log(`Image deleted from Cloudinary for article ${id}: ${articleToDelete.image}`);
+          } catch (deleteError) {
+            console.warn(`Could not delete Cloudinary image for article ${id}:`, deleteError);
+            // Log the error but don't prevent the 204 response as the DB record is gone
           }
+        } else {
+          console.warn(`Could not extract public_id from image URL for article ${id}: ${articleToDelete.image}`);
         }
       }
 
