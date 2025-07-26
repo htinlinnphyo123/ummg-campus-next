@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       // Get the relative path of the uploaded file
-      const filePath = uploadedImage.filepath || uploadedImage.path;
+      const filePath = uploadedImage.filepath;
       if (!filePath) {
         return res.status(400).json({ error: 'Uploaded file path is missing' });
       }
