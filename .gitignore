@@ -44,3 +44,5 @@ Thumbs.db
 .i18n/
 
 /generated/prisma
+
+public/uploads/

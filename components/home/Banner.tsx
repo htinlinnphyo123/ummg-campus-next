@@ -2,7 +2,7 @@ import BannerImage from "../../public/images/ummg/banner.png"
 export default function Banner() {
   return (
     <section id="home" className="w-full relative">
-      <div className="h-screen w-full relative overflow-hidden">
+      <div className="h-[80vh] w-full relative overflow-hidden">
         <img
           src={BannerImage.src}
           alt="UMMG Campus Banner"

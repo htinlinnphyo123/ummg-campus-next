@@ -4,14 +4,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Article {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  description String @db.LongText
+  description String
   image       String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
