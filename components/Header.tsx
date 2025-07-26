@@ -6,7 +6,7 @@ import useHeaderToggler from "../hooks/header-toggler";
 import UniLogo from "../public/images/ummg/uni_logo.png"
 import Link from "next/link";
 
-export default function Header() {
+export default function Header({ isHomePage = false }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
@@ -21,7 +21,9 @@ export default function Header() {
 
   return (
     <>
-      <header className={`p-4 fixed top-0 left-0 font-bold w-full z-10 ${!isHeaderVisible ? 'bg-transparent text-[#333333]' : 'bg-[#ece7e7f6] dark:bg-[#0f1114f5]'}`}>
+      <header className={`p-4 fixed top-0 left-0 font-bold w-full z-10 
+        ${!isHeaderVisible ? 'bg-transparent text-[#333333]' : 'bg-[#ece7e7f6] dark:bg-[#0f1114f5]'}
+        `}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="text-xl font-bold">
             <Link
@@ -37,7 +39,8 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className={`hidden md:flex items-center gap-4 py-2 px-4 transition-all duration-100
+          <div className={`flex items-center gap-4 py-2 px-4 transition-all duration-100
+          ${isHomePage ? 'hidden lg:flex' : 'hidden'}
           ${!isHeaderVisible
             ? 'bg-white text-black dark:bg-black dark:text-white bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-full'
             : ''

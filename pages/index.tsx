@@ -10,8 +10,9 @@ import { useEffect, useState } from "react";
 import Curriculum from "../components/home/curriculum";
 import Divider from '../components/common/CustomDivider';
 import Article from '../components/home/Articles'
-import Link from "next/link";
-      
+import Collaborations from '../components/home/collaborations'
+import CurrentAcademic from '../components/home/current-academic'
+import Footer from "@/common/footer";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,8 +34,8 @@ export default function Home() {
 
   return (
     <div className="bg-gray-100 dark:bg-gray-800 min-h-screen text-black dark:text-white">
-      <Header />
-      <Banner />
+      <Header isHomePage={true} />
+      <Banner />  
       <About />
       <Divider />
       <Vision />
@@ -50,14 +51,11 @@ export default function Home() {
       <Curriculum />
       <Divider />
       <Article />
-      <div className="flex justify-center mt-8 mb-12">
-        <Link
-          href="/news"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
-        >
-          See All Articles
-        </Link>
-      </div>
+      <Divider />
+      <CurrentAcademic />
+      <Divider />
+      <Collaborations />
+      <Footer />
     </div>
   );
 }

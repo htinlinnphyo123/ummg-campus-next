@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import Title from "./title";
 
 interface Article {
@@ -35,8 +36,16 @@ export default function Articles() {
   }
 
   return (
-    <div id="news" className="container mx-auto px-4">
+    <div id="news" className="mx-auto px-4">
+      <div className="flex justify-between">
         <Title name="News" />
+        <Link
+          href="/news"
+          className="px-6 py-3 text-blue-600"
+        >
+          See All Articles
+        </Link>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => (
           <div
