@@ -11,12 +11,10 @@ const AcademicPrograms = () => {
         />
       </div>
 
-      {/* Content Section */}
       <div className="lg:w-1/2 flex flex-col gap-8">
-        {/* Current Academic Programs */}
         <div>
-          <h2 className="text-xl font-bold text-purple-800 mb-4">CURRENT ACADEMIC PROGRAMS</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
+          <h2 className="text-xl font-bold text-purple-600 mb-4">CURRENT ACADEMIC PROGRAMS</h2>
+          <p className="text-gray-700 dark:text-white leading-relaxed mb-4">
             For the present time, as the right to education is being oppressed by the military,
             the IUC developed a virtual online campus to continue delivering education to
             CDM students. The online campus is a Moodle-based learning platform and the
@@ -27,14 +25,14 @@ const AcademicPrograms = () => {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-purple-800 mb-4">HOW TO REGISTER FOR UMMG ONLINE CAMPUS</h2>
-          <p className="text-gray-700 leading-relaxed mb-4">
+          <h2 className="text-xl font-bold text-purple-600 mb-4">HOW TO REGISTER FOR UMMG ONLINE CAMPUS</h2>
+          <p className="text-gray-700 dark:text-white leading-relaxed mb-4">
             All CDM students are eligible for registering for the UMMG online campus.
           </p>
         </div>
 
         {/* Contact Us */}
-        <p className="text-gray-600 mt-4">
+        <p className="text-gray-600 dark:text-white mt-4">
           To inquiry further information <a href="https://t.me/ummgcampus" className="text-blue-600 hover:underline" target="_blank">Contact Us</a>
         </p>
       </div>

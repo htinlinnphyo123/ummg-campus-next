@@ -1,13 +1,13 @@
 const Collaborations = () => {
   return (
     <div className="mx-auto px-4">
-      <h2 className="text-3xl font-bold text-purple-800 mb-6">COLLABORATIONS</h2>
+      <h2 className="text-3xl font-bold text-purple-600 mb-6">COLLABORATIONS</h2>
 
-      <p className="text-gray-700 leading-relaxed mb-6">
+      <p className="text-gray-700 dark:text-white leading-relaxed mb-6">
         IUC is in strategic collaboration with <a href="https://www.facebook.com/UMMGAlumniAssociation" className="text-blue-600 hover:underline font-semibold">UMMG Alumni Association (UMMGAA)</a>
       </p>
 
-      <ul className="list-disc pl-5 space-y-4 text-gray-700">
+      <ul className="list-disc pl-5 space-y-4 text-gray-700 dark:text-white">
         <li>
           UMMGAA is organized by UMMG alumni and carries out several activities related to humanitarian aids and human rights. UMMGAA is in close collaboration with
           UMMGIUC and is actively involved in activities to give support to CDM staff and students.

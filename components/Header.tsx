@@ -22,7 +22,7 @@ export default function Header({ isHomePage = false }) {
   return (
     <>
       <header className={`p-4 fixed top-0 left-0 font-bold w-full z-10 
-        ${!isHeaderVisible ? 'bg-transparent text-[#333333]' : 'bg-[#ece7e7f6] dark:bg-[#0f1114f5]'}
+        ${!isHeaderVisible ? 'bg-transparent text-[#333333]' : 'bg-[#ece7e7f6] dark:bg-[#0f1114f5] dark:text-white'}
         `}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="text-xl font-bold">
@@ -39,13 +39,17 @@ export default function Header({ isHomePage = false }) {
             </Link>
           </div>
 
-          <div className={`flex items-center gap-4 py-2 px-4 transition-all duration-100
-          ${isHomePage ? 'hidden lg:flex' : 'hidden'}
+          <div className={`hidden lg:flex items-center gap-4 py-2 px-4 transition-all duration-100
           ${!isHeaderVisible
             ? 'bg-white text-black dark:bg-black dark:text-white bg-opacity-60 backdrop-filter backdrop-blur-sm rounded-full'
             : ''
           }`}>
-            <NavLinks className="px-3 py-1" />
+            {isHomePage && <NavLinks className="px-3 py-1" />}
+            {!isHomePage && (
+              <Link href="/news" className="px-3 py-1 hover:text-blue-500 transition-colors">
+                News
+              </Link>
+            )}
             <ThemeToggle />
           </div>
 

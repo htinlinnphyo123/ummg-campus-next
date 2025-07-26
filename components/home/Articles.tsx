@@ -39,18 +39,16 @@ export default function Articles() {
     <div id="news" className="mx-auto px-4">
       <div className="flex justify-between">
         <Title name="News" />
-        <Link
-          href="/news"
-          className="px-6 py-3 text-blue-600"
-        >
+        <Link href="/news" className="px-6 py-3 text-blue-600">
           See All Articles
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => (
-          <div
+          <Link
+            href={`/news/${article.id}`}
             key={article.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
+            className="bg-white text-gray-500 rounded-lg shadow-md overflow-hidden"
           >
             {article.image && (
               <img
@@ -60,7 +58,7 @@ export default function Articles() {
               />
             )}
             <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{article.name}</h2>
+              <h2 className="text-lg font-semibold mb-2">{article.name}</h2>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-500">
                   {new Date(article.createdAt).toLocaleDateString()}
@@ -70,7 +68,7 @@ export default function Articles() {
                 </button>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
