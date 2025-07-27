@@ -9,7 +9,7 @@ export default function Timeline() {
           <img
             src={TimelineImage.src}
             alt="Timeline of University of Medicine (Magway)"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain bg-white p-3 rounded-md"
           />
         </div>
       </div>

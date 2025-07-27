@@ -22,7 +22,7 @@ const Footer = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-9 13v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" />
             </svg>
-            <a href="mailto:interimcouncil.umm@protonmail.com" className="hover:underline">interimcouncil.umm@protonmail.com</a>
+            <a href="mailto:office@ummg-campus.org" className="hover:underline">office@ummg-campus.org</a>
           </div>
           <div className="flex items-center text-gray-700 text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -25,7 +25,7 @@ export default function Header({ isHomePage = false }) {
         ${!isHeaderVisible ? 'bg-transparent text-[#333333]' : 'bg-[#ece7e7f6] dark:bg-[#0f1114f5] dark:text-white'}
         `}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="text-xl font-bold">
+          <div className="text-md lg:text-xl font-bold">
             <Link
               href="/"
               className={`flex items-center cursor-pointer tracking-wide ${!isHeaderVisible ? 'text-white' : ''}`}
@@ -35,7 +35,7 @@ export default function Header({ isHomePage = false }) {
                 alt="Lucky Click Logo"
                 className="h-12 w-12 mr-2 rounded-sm"
               />
-              UMMG
+              University of Medicine, Magway
             </Link>
           </div>
 
@@ -57,7 +57,20 @@ export default function Header({ isHomePage = false }) {
             onClick={toggleSidebar}
             className="md:hidden px-2 py-1 border rounded"
           >
-            ☰
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
           </button>
         </div>
       </header>
