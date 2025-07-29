@@ -24,18 +24,12 @@ const Footer = () => {
             </svg>
             <a href="mailto:office@ummg-campus.org" className="hover:underline">office@ummg-campus.org</a>
           </div>
-          <div className="flex items-center text-gray-700 text-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            <span>+14352881331</span>
-          </div>
         </div>
 
         <div className="flex flex-col items-center md:items-start text-center md:text-left md:w-1/3">
           <h3 className="text-xl font-bold text-purple-800 mb-4">SOCIAL LINK</h3>
           <div className="flex space-x-4">
-            <a href="https://learn.ummg-campus.org/" target="_blank" className="p-2 rounded-full text-white hover:opacity-80 border border-gray-500">
+            <a href="https://education.ummg-campus.org/" target="_blank" className="p-2 rounded-full text-white hover:opacity-80 border border-gray-500">
               <img src={MoodleLogo.src} alt="Moodle Logo" className="w-6 h-6" />
             </a>
             <a href="https://www.facebook.com/iucummg/" target="_blank" className="p-2 rounded-full text-white hover:opacity-80 border border-gray-500">
