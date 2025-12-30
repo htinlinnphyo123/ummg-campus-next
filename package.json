@@ -16,7 +16,7 @@
     "embla-carousel-react": "^8.6.0",
     "formidable": "^3.5.4",
     "mysql2": "^3.14.2",
-    "next": "latest",
+    "next": "15.5.8",
     "next-i18next": "latest",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.5",
