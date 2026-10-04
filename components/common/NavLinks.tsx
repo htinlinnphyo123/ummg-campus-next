@@ -1,77 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { NavLinksProps } from "../../types/MobileNavProps";
 
-export const NavLinks = ({ className = "", onClick }: NavLinksProps) => {
-  const [active, setActive] = useState<string>("home");
+const sections = [
+  { id: "home", label: "Home" },
+  { id: "iuc", label: "Our council" },
+  { id: "academic", label: "Academics" },
+  { id: "news", label: "News" },
+];
 
-  const sections = ["home", "iuc", "academic", "news"];
-  const isScrolling = useRef(false);
-  const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleScrollTo = (sectionId: string, offset = -100) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const y =
-        section.getBoundingClientRect().top + window.pageYOffset + offset;
-
-      isScrolling.current = true;
-      setActive(sectionId);
-
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
-
-      scrollTimeout.current = setTimeout(() => {
-        isScrolling.current = false;
-      }, 700);
-
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
-
+export const NavLinks = ({ className = "", onClick, isHomePage = true }: NavLinksProps & { isHomePage?: boolean }) => {
+  const [active, setActive] = useState("home");
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-100px 0px 0px 0px",
-      threshold: 0.3,
-    };
-
+    if (!isHomePage) return;
     const observer = new IntersectionObserver((entries) => {
-      if (isScrolling.current) return;
-
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
-      });
-    }, observerOptions);
-
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); });
+    }, { rootMargin: "-15% 0px -50% 0px", threshold: 0 });
+    sections.forEach(({ id }) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
     });
-
     return () => observer.disconnect();
-  }, []);
+  }, [isHomePage]);
 
-  const getButtonClass = (section: string) => {
-    return `${className} ${active === section ? "active uppercase" : "uppercase"}`;
-  };
-
-  return (
-    <>
-      {sections?.map((section: any) => (
-        <button
-          className={getButtonClass(section)}
-          onClick={() => {
-            handleScrollTo(section);
-            onClick?.();
-          }}
-          key={section}
-        >
-          {section}
-        </button>
-      ))}
-    </>
-  );
+  return <>{sections.map(({ id, label }) => (
+    <Link key={id} href={isHomePage ? `#${id}` : id === "news" ? "/news" : `/#${id}`} className={`nav-link ${className} ${isHomePage && active === id ? "is-active" : ""}`} aria-current={isHomePage && active === id ? "location" : undefined} onClick={() => { setActive(id); onClick?.(); }}>
+      {label}
+    </Link>
+  ))}</>;
 };

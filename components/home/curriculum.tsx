@@ -9,7 +9,7 @@ export default function Curriculum() {
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start">
           <div className="w-full lg:w-1/2">
-            <Title name='OUTCOME-BASED INTEGRATE CURRICULUM (OBIC)' className='text-2xl' />
+            <Title name='OUTCOME-BASED INTEGRATED CURRICULUM (OBIC)' className='text-2xl' />
             <p className="text-md">
               Recently, an outcome-based Integrated Curriculum (OBIC) was introduced in 2020
               based on the following domains:
@@ -32,7 +32,7 @@ export default function Curriculum() {
 
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
             <div className="max-w-full rounded-lg shadow-lg overflow-hidden">
-              <a href="/curriculum-details" target="_blank" rel="noopener noreferrer">
+              <a href={ObicImage.src} target="_blank" rel="noopener noreferrer">
                 <Image
                     src={ObicImage.src}
                     width={600} height={300}

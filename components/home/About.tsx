@@ -1,21 +1,11 @@
-import Title from './title'
-import UniLogo from "../../public/images/ummg/uni_logo.png"
+import UniLogo from "../../public/images/ummg/uni_logo.png";
+
 export default function About() {
-    return (
-        <section className="pt-10 pb-4 px-4 sm:px-6 lg:px-20">
-          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Title name='About UMMG' />
-              <p className="text-lg leading-relaxed">
-                University of Medicine Magway (UMMG) is one of the five medical universities in Myanmar. It is located 7 miles east of Magway Township, Magway Division, Myanmar. UMMG is reputed as the Union University as many students from different places of the country come to attend. After the coup de ’tat, along with the establishment of federalism, we are in a transitional period to be an autonomous university.
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <div className="flex items-center justify-center">
-                <img src={UniLogo.src} alt="University Logo" className="w-1/2" />
-              </div>
-            </div>
-          </div>
-        </section>
-    )
+  return (
+    <section id="about" className="about-section page-width">
+      <div className="about-intro"><p className="eyebrow">01 / WHO WE ARE</p><h2>More than a campus.<br /><span className="serif-word">A community.</span></h2><a className="text-link" href="#iuc">Meet our university council <span aria-hidden="true">↗</span></a></div>
+      <div className="about-copy"><p>University of Medicine, Magway (UMMG) is one of the five medical universities in Myanmar. Known as the <strong>Union University</strong>, we bring together students from across the country, united by a commitment to medicine.</p><p>Located seven miles east of Magway, our community is working towards an autonomous, learner-focused university alongside the establishment of federalism.</p></div>
+      <div className="university-seal"><img src={UniLogo.src} alt="University of Medicine, Magway seal" width={140} height={140} /><span>ONE COMMUNITY.<br />A SHARED PURPOSE.</span></div>
+    </section>
+  );
 }

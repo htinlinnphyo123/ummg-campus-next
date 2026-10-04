@@ -4,7 +4,7 @@ export default function LwnYaTaeNayYarLay() {
   return (
     <div id="iuc" className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-2 lg:px-10">
       <div className="md:text-left text-center md:w-1/2">
-        <Title name="Interm University Council" />
+        <Title name="Interim University Council" />
         <p>
           On February 1, 2021, the coup d‘ etat started in Myanmar. The people
           protested the coup through a wide range of non-violent methods most
