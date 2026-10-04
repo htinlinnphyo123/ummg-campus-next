@@ -9,7 +9,7 @@ const IUCCoreCommittee = () => {
   return (
     <div className="py-4 px-4 lg:px-8">
       <div className="mx-auto">
-        <Title name="The Core Committee of IUC" className='text-center'/>        
+        <Title name="Council committees" className='text-center'/>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-none">
           <div className="bg-white rounded-lg shadow-md cursor-pointer p-6 border border-gray-200 flex flex-col hover:shadow-2xl">
             <div className="flex justify-center mb-6">
@@ -17,7 +17,7 @@ const IUCCoreCommittee = () => {
             </div>
             
             <h2 className="text-xl font-bold text-purple-600 text-center mb-4">
-              THE ACADEMIC COMMITTEE
+              Academic Committee
             </h2>
             
             <div className="text-gray-700 text-sm space-y-4">
@@ -52,7 +52,7 @@ const IUCCoreCommittee = () => {
             </div>
             
             <h2 className="text-xl font-bold text-purple-600 text-center mb-4">
-              THE GLOBAL ENGAGEMENT COMMITTEE
+              Global Engagement Committee
             </h2>
             
             <div className="text-gray-700 text-sm space-y-4">
@@ -83,7 +83,7 @@ const IUCCoreCommittee = () => {
             </div>
             
             <h2 className="text-xl font-bold text-purple-600 text-center mb-4">
-              THE CDM COMMITTEE
+              CDM Committee
             </h2>
             
             <div className="text-gray-700 text-sm space-y-4">

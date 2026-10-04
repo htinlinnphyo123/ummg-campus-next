@@ -5,12 +5,12 @@ export default function AcademicSection() {
   return (
     <section id='academic'>
       <div className="mx-auto px-4 lg:px-8">
-        <Title name='ACADEMIC SECTION' className='text-center' />
+        <Title name='Academic programmes' className='text-center' />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className=" p-6 rounded-lg shadow-md border border-gray-200 dark:bg-white dark:text-gray-900">
             <h3 className="text-2xl font-bold mb-4">
-              ACADEMIC PROGRAMS
+              Degree programmes
             </h3>
             <p className="leading-relaxed">
               The UMMG currently offers MBBS degree programs, M.Med.Sc. degree
@@ -20,7 +20,7 @@ export default function AcademicSection() {
 
           <div className=" p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-xl dark:bg-white dark:text-gray-900">
             <h3 className="text-2xl font-bold mb-4">
-              THE CURRICULUM OF UNDERGRADUATE PROGRAMS
+              Undergraduate curriculum
             </h3>
             <p className="leading-relaxed">
               The current curriculum is a Traditional discipline-based curriculum, consisting

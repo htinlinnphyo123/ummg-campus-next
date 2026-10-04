@@ -2,29 +2,39 @@ import BannerImage from "../../public/images/ummg/banner.png";
 
 export default function Banner() {
   return (
-    <section id="home" className="hero">
-      <div className="hero-inner page-width">
+    <section id="home" className="hero page-width">
+      <div className="hero-inner">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="status-dot" /> KNOWLEDGE. COMPASSION. COMMUNITY.</p>
-          <h1>A healthier<br />future starts<br /><span className="highlight-word">with us.</span><span className="hero-asterisk" aria-hidden="true">✳</span></h1>
-          <p className="hero-description">Welcome to the University of Medicine, Magway.<br className="desktop-break" /> A community of learners, educators, and future<br className="desktop-break" /> doctors. Moving medicine forward, together.</p>
-          <div className="hero-buttons">
-            <a className="neo-button" href="#academic">Explore academics <span aria-hidden="true">↗</span></a>
-            <a className="text-link" href="#about">Get to know UMMG <span aria-hidden="true">↓</span></a>
-          </div>
-          <div className="hero-footnote"><span className="mini-cross" aria-hidden="true">✚</span><span>ROOTED IN MAGWAY. CONNECTED BY PURPOSE.</span></div>
+          <p className="eyebrow">Magway, Myanmar</p>
+          <h1>University of<br />Medicine,<br /><span>Magway.</span></h1>
+          <p className="hero-description">
+            Medical education, research and a commitment to the people we serve.
+            Welcome to the UMMG university community.
+          </p>
+          <a className="neo-button" href="#academic">Academic programmes <span aria-hidden="true">→</span></a>
         </div>
-        <div className="hero-visual">
-          <div className="campus-sticker">LEARN.<br />CARE.<br />MAKE A DIFFERENCE.<span aria-hidden="true">↗</span></div>
-          <figure className="campus-photo">
-            <div className="photo-topline"><span><i /><i /><i /></span><span>OUR CAMPUS / MAGWAY, MYANMAR</span><span aria-hidden="true">↗</span></div>
-            <img src={BannerImage.src} alt="The University of Medicine, Magway campus and its medical monument" fetchPriority="high" width={1280} height={800} />
-            <figcaption><span>A place to belong.<br /><strong>A purpose to believe in.</strong></span><span className="photo-arrow" aria-hidden="true">↗</span></figcaption>
-          </figure>
-          <span className="location-tag"><span aria-hidden="true">◎</span> MAGWAY / MYANMAR</span>
-        </div>
+        <figure className="campus-photo">
+          <img
+            src={BannerImage.src}
+            alt="The medical monument and main building at the University of Medicine, Magway"
+            fetchPriority="high"
+            width={1280}
+            height={800}
+          />
+          <figcaption><span>University of Medicine, Magway</span><span>Main campus</span></figcaption>
+        </figure>
       </div>
-      <div className="values-strip" aria-label="Our values"><span>MEDICAL EDUCATION</span><span aria-hidden="true">✳</span><span>COLLECTIVE PROGRESS</span><span aria-hidden="true">✳</span><span>COMMUNITY FIRST</span><span aria-hidden="true">✳</span><span>THE NEXT GENERATION</span><span aria-hidden="true">✳</span></div>
+      <nav className="campus-services" aria-label="Student resources">
+        <a href="https://education.ummg-campus.org/" target="_blank" rel="noopener noreferrer">
+          <span><small>For students & teachers</small><strong>Online learning campus</strong></span><span aria-hidden="true">↗</span>
+        </a>
+        <a href="#registration">
+          <span><small>Getting started</small><strong>Campus registration</strong></span><span aria-hidden="true">→</span>
+        </a>
+        <a href="https://t.me/infoummgiuc" target="_blank" rel="noopener noreferrer">
+          <span><small>University enquiries</small><strong>Contact the university</strong></span><span aria-hidden="true">↗</span>
+        </a>
+      </nav>
     </section>
   );
 }

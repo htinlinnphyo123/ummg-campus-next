@@ -18,14 +18,20 @@ export default function Home() {
       <Header isHomePage />
       <main id="main-content">
         <Banner />
-        <About />
-        <Vision />
-        <div className="section-band"><div className="content-block page-width"><p className="eyebrow">02 / OUR STORY</p><Timeline /></div></div>
-        <div className="content-block page-width"><p className="eyebrow">03 / PEOPLE & PURPOSE</p><Nostalgia /><IUCCoreCommittee /></div>
-        <div className="section-band academic-band"><div className="content-block page-width"><p className="eyebrow">04 / LEARNING WITHOUT LIMITS</p><AcademicSection /><Curriculum /></div></div>
         <Article />
-        <div className="section-band"><div className="content-block page-width"><p className="eyebrow">06 / YOUR NEXT CHAPTER</p><CurrentAcademic /></div></div>
-        <div className="content-block page-width"><p className="eyebrow">07 / STRONGER TOGETHER</p><Collaborations /></div>
+        <div className="section-band">
+          <About />
+          <Vision />
+        </div>
+        <div className="content-block page-width"><Timeline /></div>
+        <div className="section-band">
+          <div className="content-block page-width"><Nostalgia /><IUCCoreCommittee /></div>
+        </div>
+        <div className="content-block page-width"><AcademicSection /><Curriculum /></div>
+        <div className="section-band">
+          <div id="registration" className="content-block page-width"><CurrentAcademic /></div>
+        </div>
+        <div className="content-block page-width"><Collaborations /></div>
       </main>
       <Footer />
     </div>

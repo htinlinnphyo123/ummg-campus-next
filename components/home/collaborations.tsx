@@ -1,7 +1,7 @@
 const Collaborations = () => {
   return (
     <div className="mx-auto px-4">
-      <h2 className="text-3xl font-bold text-purple-600 mb-6">COLLABORATIONS</h2>
+      <h2 className="text-3xl font-bold text-purple-600 mb-6">University collaborations</h2>
 
       <p className="text-gray-700 dark:text-white leading-relaxed mb-6">
         IUC is in strategic collaboration with <a href="https://www.facebook.com/UMMGAlumniAssociation" className="text-blue-600 hover:underline font-semibold">UMMG Alumni Association (UMMGAA)</a>
