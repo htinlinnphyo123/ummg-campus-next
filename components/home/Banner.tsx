@@ -11,7 +11,10 @@ export default function Banner() {
             Medical education, research and a commitment to the people we serve.
             Welcome to the UMMG university community.
           </p>
-          <a className="neo-button" href="#academic">Academic programmes <span aria-hidden="true">→</span></a>
+          <div className="hero-actions">
+            <a className="neo-button" href="#academic">Academic programmes <span aria-hidden="true">→</span></a>
+            <a className="text-link" href="#about">About UMMG</a>
+          </div>
         </div>
         <figure className="campus-photo">
           <img

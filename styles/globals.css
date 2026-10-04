@@ -93,39 +93,43 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 /* The campus photograph and university name carry the opening. */
 .hero-inner { display: grid; grid-template-columns: .85fr 1.35fr; gap: 64px; padding-block: 50px 40px; align-items: center; }
 .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; line-height: 1.6; margin-bottom: 17px; }
-.hero h1 { font-size: clamp(44px, 4.2vw, 61px); font-weight: 800; line-height: 1.04; letter-spacing: -2.5px; margin: 0 0 25px; }
+.hero h1 { font-size: clamp(44px, 4.4vw, 64px); font-weight: 800; line-height: 1.04; letter-spacing: -2.5px; margin: 0 0 25px; }
 .hero h1 span { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 6px; text-decoration-skip-ink: none; text-underline-offset: 8px; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
 .hero-description { font-size: 15px; line-height: 1.75; color: var(--muted); max-width: 345px; margin-bottom: 27px; }
-.campus-photo { margin: 0; min-width: 0; }
-.campus-photo > img { width: 100%; aspect-ratio: 1.5; object-fit: cover; border: 2px solid var(--ink); }
-.campus-photo figcaption { padding-top: 12px; display: flex; justify-content: space-between; gap: 15px; font-size: 11px; line-height: 1.5; color: var(--muted); }
+.campus-photo { margin: 0; min-width: 0; background: #252720; border: 2px solid #252720; box-shadow: 6px 6px 0 var(--accent); }
+.campus-photo > img { width: 100%; aspect-ratio: 1.5; object-fit: cover; }
+.campus-photo figcaption { padding: 14px 18px; display: flex; justify-content: space-between; gap: 15px; font-size: 11px; line-height: 1.5; color: #f8f7f2; }
 .campus-photo figcaption > span:last-child { white-space: nowrap; }
 .campus-services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 2px solid var(--ink); background: var(--surface); box-shadow: 4px 4px 0 var(--ink); }
-.campus-services a { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 21px 25px; }
+.campus-services a { transition: background-color .18s; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 21px 25px; }
 .campus-services a + a { border-left: 1px solid var(--ink); }
 .campus-services a:hover { background: var(--accent); color: #252720; }
 .campus-services small { display: block; font-size: 11px; font-weight: 400; margin-bottom: 7px; }
 .campus-services strong { display: block; font-size: 15px; font-weight: 700; }
-.campus-services a > span:last-child { font-size: 23px; }
+.campus-services a > span:last-child { font-size: 23px; transition: transform .18s; }
+.campus-services a:hover > span:last-child { transform: translate(3px, -2px); }
 .text-link { display: inline-flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 5px; }
 .text-link:hover { text-decoration-thickness: 2px; }
 
 /* Notices come before institutional background. */
 .news-section { padding-block: 52px 60px; }
-.section-heading-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 25px; }
+.section-heading-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 25px; }
 .section-heading-row .eyebrow { margin-bottom: 8px; }
 .section-title { font-size: 30px; line-height: 1.2; font-weight: 700; letter-spacing: -.9px; margin-bottom: 28px; text-align: left; }
 .section-heading-row .section-title { margin-bottom: 0; }
 .section-heading-row > .text-link { flex-shrink: 0; margin-bottom: 4px; }
 .news-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.news-card { display: flex; align-items: flex-start; gap: 22px; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); padding-block: 22px; }
+.news-card { transition: border-color .18s; display: flex; align-items: flex-start; gap: 22px; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); padding-block: 22px; }
+.news-card:hover { border-top-color: var(--focus); }
 .news-card:hover h3 { text-decoration: underline; text-underline-offset: 5px; }
 .news-card > img { width: 145px; height: 135px; object-fit: contain; background: var(--band); border: 1px solid var(--rule); flex-shrink: 0; }
 .news-card-copy { flex: 1; min-width: 0; }
 .news-card h3 { overflow-wrap: anywhere; font-size: 17px; line-height: 1.7; font-weight: 600; margin: 0 0 18px; }
-.news-card-meta { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 11px; }
-.news-card-meta time { color: var(--muted); }
-.news-card-meta > span { font-weight: 600; }
+.notice-date { display: block; color: var(--muted); font-size: 11px; margin-bottom: 13px; font-variant-numeric: tabular-nums; }
+.notice-link { display: inline-flex; align-items: center; gap: 16px; font-size: 12px; font-weight: 600; }
+.notice-link > span { transition: transform .18s; }
+.news-card:hover .notice-link > span { transform: translateX(4px); }
 .news-state { padding: 28px; border: 1px solid var(--rule); background: var(--surface); }
 .news-state h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
 .news-state p { color: var(--muted); line-height: 1.7; }
@@ -157,6 +161,33 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
 .content-block #academic .grid > div:first-child { background: var(--band); border-top-color: var(--accent); }
 .content-block #academic + section { margin-top: 50px; }
 .content-block hr { display: none; }
+
+/* Programme panels use the same print-like rules as the masthead. */
+.programme-grid { display: grid; grid-template-columns: 1.15fr 1fr 1fr; border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); }
+.programme-card { padding: 28px; background: var(--surface); }
+.programme-card:first-child { background: var(--accent); color: #252720; }
+.programme-card + .programme-card { border-left: 1px solid var(--ink); }
+.academic-section .programme-level { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.programme-card h3 { font-size: clamp(32px, 3.2vw, 46px); font-weight: 700; letter-spacing: -1.7px; margin: 24px 0 15px; line-height: 1.15; }
+.programme-card > p:last-child { max-width: 260px; }
+.study-path { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--rule); }
+.study-path h3 { font-size: 21px; font-weight: 700; line-height: 1.35; }
+.study-path ol { display: flex; margin-block: 24px 16px; border-block: 1px solid var(--rule); }
+.study-path li { flex: 1; padding: 14px 16px; font-weight: 600; }
+.study-path li:first-child { padding-left: 0; }
+.study-path li + li { border-left: 1px solid var(--rule); }
+.study-path .path-note { font-size: 12px; color: var(--muted); }
+.curriculum-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; padding-top: 48px; border-top: 2px solid var(--ink); }
+.curriculum-domains { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; margin-block: 25px; }
+.curriculum-domains li { padding-block: 12px; border-top: 1px solid var(--rule); }
+.document-figure { margin: 0; border: 1px solid var(--ink); background: var(--surface); box-shadow: 5px 5px 0 var(--rule); }
+.document-figure img { display: block; width: 100%; padding: 18px; background: #fff; }
+.document-caption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding: 16px 18px; border-top: 1px solid var(--ink); font-size: 11px; }
+.document-caption > span { text-decoration: underline; text-underline-offset: 3px; }
+.document-figure a:hover .document-caption { background: var(--accent); color: #252720; }
+.history-image { display: block; padding: 20px; background: #fff; border: 1px solid var(--ink); }
+.history-image img { width: 100%; height: auto; }
+.history-image:hover { outline: 3px solid var(--accent); outline-offset: 0; }
 
 .registration-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
 .registration-panel { border-left: 4px solid var(--accent); padding-left: 22px; margin-top: 30px; }
@@ -200,6 +231,8 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
   .news-card > img { width: 100%; height: 190px; }
   .news-card-copy { width: 100%; }
   .about-section { gap: 45px; }
+  .programme-card { padding: 23px; }
+  .curriculum-layout { gap: 30px; }
   .footer-grid { gap: 30px; }
 }
 
@@ -230,11 +263,20 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
   .news-card { flex-direction: row; gap: 16px; }
   .news-card > img { width: 100px; height: 105px; }
   .news-card h3 { font-size: 15px; margin-bottom: 14px; }
-  .news-card-meta { font-size: 10px; }
+  .notice-date { font-size: 10px; }
   .about-section { grid-template-columns: 1fr; padding-block: 38px 30px; gap: 25px; }
   .about-intro h2 { font-size: 29px; }
   .about-copy { padding-top: 0; font-size: 15px; }
   .registration-layout { grid-template-columns: 1fr; gap: 30px; }
+  .programme-grid { grid-template-columns: 1fr; }
+  .programme-card + .programme-card { border-left: 0; border-top: 1px solid var(--ink); }
+  .programme-card h3 { margin-top: 16px; }
+  .programme-card > p:last-child { max-width: none; }
+  .study-path { grid-template-columns: 1fr; gap: 18px; }
+  .study-path li { padding: 12px 10px; font-size: 12px; }
+  .curriculum-layout { grid-template-columns: 1fr; padding-top: 35px; }
+  .curriculum-domains { grid-template-columns: 1fr; }
+  .history-image { padding: 6px; }
   .purpose-grid { grid-template-columns: 1fr; padding-bottom: 38px; gap: 28px; }
   .content-block { padding-block: 38px; }
   .content-block > div + div { margin-top: 38px; }
@@ -247,6 +289,12 @@ a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent
   .news-page { padding-block: 35px 50px; }
   .news-page > h1 { font-size: 34px; }
   .article-detail > h1 { font-size: 26px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy, .campus-photo { animation: campus-arrive .55s ease-out both; }
+  .campus-photo { animation-delay: .1s; }
+  @keyframes campus-arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 }
 
 @media (prefers-reduced-motion: reduce) {

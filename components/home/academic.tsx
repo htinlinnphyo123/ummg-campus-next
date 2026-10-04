@@ -1,36 +1,33 @@
-import React from 'react';
-import Title from './title';
+const programmes = [
+  { level: "Undergraduate", name: "MBBS", description: "Undergraduate medical education and clinical training." },
+  { level: "Postgraduate", name: "M.Med.Sc.", description: "Postgraduate study in medical science." },
+  { level: "Research", name: "PhD", description: "Doctoral programmes in medical science." },
+];
 
 export default function AcademicSection() {
   return (
-    <section id='academic'>
-      <div className="mx-auto px-4 lg:px-8">
-        <Title name='Academic programmes' className='text-center' />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className=" p-6 rounded-lg shadow-md border border-gray-200 dark:bg-white dark:text-gray-900">
-            <h3 className="text-2xl font-bold mb-4">
-              Degree programmes
-            </h3>
-            <p className="leading-relaxed">
-              The UMMG currently offers MBBS degree programs, M.Med.Sc. degree
-              programs, and PhD programs in medical science.
-            </p>
-          </div>
-
-          <div className=" p-6 rounded-lg shadow-md border border-gray-200 hover:shadow-xl dark:bg-white dark:text-gray-900">
-            <h3 className="text-2xl font-bold mb-4">
-              Undergraduate curriculum
-            </h3>
-            <p className="leading-relaxed">
-              The current curriculum is a Traditional discipline-based curriculum, consisting
-              of knowledge and attitude acquired on the basis of learning medical courses,
-              followed by training for pre-clinical subjects which cover basic medical science
-              subjects, public health subjects and legal medicine. Students who pass the
-              summative assessments are forwarded to clinical years. Then a one-year
-              compulsory internship program ensues. The whole course extends over 7 years.
-            </p>
-          </div>
+    <section id="academic" className="academic-section">
+      <div className="section-heading-row">
+        <div><p className="eyebrow">Study at UMMG</p><h2 className="section-title">Academic programmes</h2></div>
+        <a href="#curriculum" className="text-link">Explore the curriculum <span aria-hidden="true">↓</span></a>
+      </div>
+      <div className="programme-grid">
+        {programmes.map((programme) => (
+          <article className="programme-card" key={programme.name}>
+            <p className="programme-level">{programme.level}</p>
+            <h3>{programme.name}</h3>
+            <p>{programme.description}</p>
+          </article>
+        ))}
+      </div>
+      <div className="study-path">
+        <h3>The undergraduate pathway</h3>
+        <div>
+          <p>The traditional discipline-based curriculum progresses from basic medical science, public health and legal medicine to clinical study. Students who pass the summative assessments continue to clinical years, followed by a compulsory one-year internship.</p>
+          <ol aria-label="Traditional undergraduate study pathway">
+            <li>Basic medical science</li><li>Clinical study</li><li>Internship</li>
+          </ol>
+          <p className="path-note">The traditional course extends over seven years.</p>
         </div>
       </div>
     </section>

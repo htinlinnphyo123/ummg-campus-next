@@ -24,7 +24,11 @@ export default function NewsFeed({ limit }: { limit?: number }) {
   return <div className="news-grid">{articles.map((article) => (
     <Link href={`/news/${article.id}`} key={article.id} className="news-card">
       {article.image && <img src={article.image} alt="" loading="lazy" />}
-      <div className="news-card-copy"><h3>{article.name}</h3><div className="news-card-meta"><time dateTime={article.createdAt}>{new Date(article.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}</time><span>Read notice →</span></div></div>
+      <div className="news-card-copy">
+        <time className="notice-date" dateTime={article.createdAt}>{new Date(article.createdAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</time>
+        <h3>{article.name}</h3>
+        <span className="notice-link">Read notice <span aria-hidden="true">→</span></span>
+      </div>
     </Link>
   ))}</div>;
 }
